@@ -1,0 +1,37 @@
+{
+    "name": "exan/pawl",
+    "description": "Asynchronous WebSocket client",
+    "keywords": [
+        "WebSocket",
+        "client",
+        "Ratchet",
+        "async",
+        "websocket client"
+    ],
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Ratchet\\Client\\": "src"
+        },
+        "files": [
+            "src/functions_include.php"
+        ]
+    },
+    "require": {
+        "php": ">=5.4",
+        "evenement/evenement": "^3.0 || ^2.0",
+        "guzzlehttp/psr7": "^2.0 || ^1.7",
+        "exan/rfc6455": "^0.3.3",
+        "react/socket": "^1.9",
+        "react/promise": "^3.0"
+    },
+    "replace": {
+        "ratchet/pawl": "0.4.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.3 || ^5.7 || ^4.8"
+    },
+    "suggest": {
+        "reactivex/rxphp": "~2.0"
+    }
+}
