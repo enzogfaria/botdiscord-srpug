@@ -7,7 +7,7 @@ use Discord\Parts\Interactions\Interaction;
 use Discord\Parts\Interactions\Command\Command;
 use Discord\WebSockets\Intents;
 use Dotenv\Dotenv;
-require_once 'Teste3.php';
+require_once 'APIdata.php';
 
 $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load();
@@ -22,7 +22,7 @@ $discord->on('ready', function (Discord $discord) {
 
     $discord->listenCommand('preço', function (Interaction $interaction) {
         $interaction->acknowledgeWithResponse()->then(function () use ($interaction) {
-            $t3 = Teste3::getInstance();
+            $t3 = APIdata::getInstance();
 
             //nome do jogo
             $jogo = $interaction->data->options['jogo']->value;
