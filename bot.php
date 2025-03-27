@@ -7,6 +7,7 @@ use Discord\Parts\Interactions\Interaction;
 use Discord\Parts\Interactions\Command\Command;
 use Discord\WebSockets\Intents;
 use Dotenv\Dotenv;
+require_once 'Teste3.php';
 
 $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load();
@@ -20,65 +21,69 @@ $discord->on('ready', function (Discord $discord) {
     echo "Bot ligado!", PHP_EOL;
 
     $discord->listenCommand('preço', function (Interaction $interaction) {
-        //nome do jogo
-        $jogo = $interaction->data->options['jogo']->value;
-    
-        //GTA V de frescura 
-        if (stripos($jogo, 'gta v') !== false) {
-            $jogo = 'Grand Theft Auto V';
-        }
-    
-        // pegar api e dados da steam e isthereanydeal
-        $steam_api_url = "https://store.steampowered.com/api/storesearch/?term=".urlencode($jogo)."&cc=br&l=pt";
-        $itad_api_url = 'https://api.isthereanydeal.com/games/storelow/v2?key=51381c6ffa97f033b1a8fcef9a0e5ec0635d9010&country=BR&shops=61';
+        $interaction->acknowledgeWithResponse()->then(function () use ($interaction) {
+            $t3 = Teste3::getInstance();
 
-        $data = array(
-            '018d937f-1ae9-734c-ba47-bd357cf07edd'
-        );
-        $json_data = json_encode($data);
-
-        function getApiData($url, $json_data = null){
-            $ch = curl_init($url);
+            //nome do jogo
+            $jogo = $interaction->data->options['jogo']->value;
         
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            if(!empty($json_data)){
-                curl_setopt($ch, CURLOPT_POST, true);
-                curl_setopt($ch, CURLOPT_POSTFIELDS, $json_data);
-                curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-                    'Content-Type: application/json'
-                ));
+            //GTA V de frescura 
+            if (stripos($jogo, 'gta v') !== false) {
+                $jogo = 'Grand Theft Auto V';
             }
-            $response = curl_exec($ch);
-            
-            curl_close($ch);
-            return json_decode($response, true);
-        }
+        
+            // pegar api e dados da steam e isthereanydeal
+            $steam_api_url = "https://store.steampowered.com/api/storesearch/?term=".urlencode($jogo)."&cc=br&l=pt";
+            $itad_api_url = "https://api.isthereanydeal.com/games/storelow/v2?key=" . $_ENV['API_KEY'] . "&country=BR&shops=61";
+            $id_api_url = "https://api.isthereanydeal.com/lookup/id/title/v1?key=" . $_ENV['API_KEY'];
 
-        $steam_api_data = getApiData($steam_api_url);
-        $itad_api_data = getApiData($itad_api_url, $json_data);
-    
-        if (!empty($steam_api_data['items'])) {
-            $item = $steam_api_data['items'][0];
-            $nome = $item['name'];
-            $itemitad = $itad_api_data[0]['lows'];
-            $menor_preco = $itemitad[0]['price']['amount'];
-            $preco = isset($item['price']['final']) ? 
-                'R$ '.number_format($item['price']['final']/100, 2, ',', '.') : 'Gratuito';
-            $menor_preco = isset($itemitad[0]['price']['amount']) ? 
-            'R$ '.number_format($itemitad[0]['price']['amount'], 2, ',', '.') : 'Gratuito';
-            $link = "https://store.steampowered.com/app/{$item['id']}";
-    
-            $response = MessageBuilder::new()->setContent(
-                "🎮 **$nome** na Steam! 🔗 [Clique aqui]($link)\n" .
-                "💵 Valor: {$preco}\n" . 
-                "📉 Menor preço histórico: {$menor_preco}\n"
+            // armazena o nome do jogo e pega o id
+            $dataid = array (
+                $jogo
             );
-        } else {
-            $response = MessageBuilder::new()->setContent("Não encontrei esse jogo na Steam. 😕");
-        }
+            $json_dataid = json_encode($dataid);
 
-        $interaction->respondWithMessage($response);
-    });
+            $id_data = $t3->getApiData($id_api_url, null, $json_dataid);
+            $id = $id_data[$jogo];
+
+            // armazena o nome do jogo
+            $data = array(
+                $id
+            );
+            $json_data = json_encode($data);
+            
+            $itad_api_data = $t3->getApiData($itad_api_url, $json_data, null);
+            $steam_api_data = $t3->getApiData($steam_api_url);
+            
+
+            if (!empty($steam_api_data['items'])) {
+                $item = $steam_api_data['items'][0];
+                $nome = $item['name'];
+                $itemitad = $itad_api_data[0]['lows'];
+                $menor_preco = $itemitad[0]['price']['amount'];
+                $preco = isset($item['price']['final']) ? 'R$ '.number_format($item['price']['final']/100, 2, ',', '.') : 'Gratuito';
+                if(empty($itemitad)){
+                    $menor_preco = "**❌ ERRO!** Certifique-se de digitar o nome corretamente.";
+                }else {
+                    $menor_preco = isset($itemitad[0]['price']['amount']) ? 'R$ '.number_format($itemitad[0]['price']['amount'], 2, ',', '.') : 'Gratuito';
+                }
+                
+                $link = "https://store.steampowered.com/app/{$item['id']}";
+        
+                $interaction->updateOriginalResponse(
+                    MessageBuilder::new()->setContent(
+                        "🎮 **$nome** na Steam! 🔗 [Clique aqui]($link)\n" .
+                        "💵 Valor: {$preco}\n" . 
+                        "📉 Menor preço histórico: {$menor_preco}\n"
+                    )
+                );
+            } else {
+                $interaction->updateOriginalResponse(
+                    MessageBuilder::new()->setContent("❌ Não encontrei esse jogo na Steam. 😕")
+                );
+            }
+        });
+    });      
 });
 
 $discord->run();
