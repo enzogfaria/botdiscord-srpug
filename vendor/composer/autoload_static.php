@@ -9,8 +9,8 @@ class ComposerStaticInitf076ddbfdf8551f0f0680f8d75044a72
     public static $files = array (
         'ad155f8f1cf0d418fe49e248db8c661b' => __DIR__ . '/..' . '/react/promise/src/functions_include.php',
         '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
-        '6e3fae29631ef280660b3cdad06f25a8' => __DIR__ . '/..' . '/symfony/deprecation-contracts/function.php',
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
+        '6e3fae29631ef280660b3cdad06f25a8' => __DIR__ . '/..' . '/symfony/deprecation-contracts/function.php',
         '662a729f963d39afe703c9d9b7ab4a8c' => __DIR__ . '/..' . '/symfony/polyfill-php83/bootstrap.php',
         '2203a247e6fda86070a5e4e07aed533a' => __DIR__ . '/..' . '/symfony/clock/Resources/now.php',
         'a1105708a18b76903365ca1c4aa61b02' => __DIR__ . '/..' . '/symfony/translation/Resources/functions.php',
@@ -34,9 +34,7 @@ class ComposerStaticInitf076ddbfdf8551f0f0680f8d75044a72
             'Symfony\\Polyfill\\Ctype\\' => 23,
             'Symfony\\Contracts\\Translation\\' => 30,
             'Symfony\\Component\\Translation\\' => 30,
-            'Symfony\\Component\\Routing\\' => 26,
             'Symfony\\Component\\OptionsResolver\\' => 34,
-            'Symfony\\Component\\HttpFoundation\\' => 33,
             'Symfony\\Component\\Clock\\' => 24,
         ),
         'R' => 
@@ -53,7 +51,6 @@ class ComposerStaticInitf076ddbfdf8551f0f0680f8d75044a72
             'React\\Async\\' => 12,
             'Ratchet\\RFC6455\\' => 16,
             'Ratchet\\Client\\' => 15,
-            'Ratchet\\' => 8,
         ),
         'P' => 
         array (
@@ -122,17 +119,9 @@ class ComposerStaticInitf076ddbfdf8551f0f0680f8d75044a72
         array (
             0 => __DIR__ . '/..' . '/symfony/translation',
         ),
-        'Symfony\\Component\\Routing\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/routing',
-        ),
         'Symfony\\Component\\OptionsResolver\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/options-resolver',
-        ),
-        'Symfony\\Component\\HttpFoundation\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/http-foundation',
         ),
         'Symfony\\Component\\Clock\\' => 
         array (
@@ -180,16 +169,11 @@ class ComposerStaticInitf076ddbfdf8551f0f0680f8d75044a72
         ),
         'Ratchet\\RFC6455\\' => 
         array (
-            0 => __DIR__ . '/..' . '/ratchet/rfc6455/src',
-            1 => __DIR__ . '/..' . '/exan/rfc6455/src',
+            0 => __DIR__ . '/..' . '/exan/rfc6455/src',
         ),
         'Ratchet\\Client\\' => 
         array (
             0 => __DIR__ . '/..' . '/exan/pawl/src',
-        ),
-        'Ratchet\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/cboden/ratchet/src/Ratchet',
         ),
         'Psr\\SimpleCache\\' => 
         array (
@@ -242,8 +226,8 @@ class ComposerStaticInitf076ddbfdf8551f0f0680f8d75044a72
         ),
         'Discord\\' => 
         array (
-            0 => __DIR__ . '/..' . '/team-reflex/discord-php/src/Discord',
-            1 => __DIR__ . '/..' . '/discord/interactions/discord',
+            0 => __DIR__ . '/..' . '/discord/interactions/discord',
+            1 => __DIR__ . '/..' . '/team-reflex/discord-php/src/Discord',
         ),
         'Carbon\\Doctrine\\' => 
         array (

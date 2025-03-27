@@ -1,7 +1,6 @@
 {
     "require": {
         "team-reflex/discord-php": "^10.4",
-        "cboden/ratchet": "0.4.4",
         "vlucas/phpdotenv": "^5.6"
     }
 }
