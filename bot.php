@@ -21,18 +21,20 @@ $discord->on('ready', function (Discord $discord) {
     echo "PUG SOLTO!", PHP_EOL;
 
     $discord->listenCommand('preço', function (Interaction $interaction) {
-        //adiciona a mensagem de espera do bot
+        // adiciona a mensagem de espera do bot
         $interaction->acknowledgeWithResponse()->then(function () use ($interaction) {
 
             $getapi = APIdata::getInstance();
 
-            //nome do jogo
+            // nome do jogo a partir dos dados da interação
             $jogo = $interaction->data->options['jogo']->value;
         
-            //GTA V de frescura 
-            if (stripos($jogo, 'gta v') !== false) {
-                $jogo = 'Grand Theft Auto V';
-            }
+            $jogos_alias = [
+                'gta v' => 'Grand Theft Auto V',
+                // outros jogos com alias aqui
+            ];
+            
+            $jogo = $jogos_alias[strtolower($jogo)] ?? $jogo;
         
             // pegar api e dados da steam e isthereanydeal
             $steam_api_url = "https://store.steampowered.com/api/storesearch/?term=".urlencode($jogo)."&cc=br&l=pt";
