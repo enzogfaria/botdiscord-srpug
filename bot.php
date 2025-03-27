@@ -18,11 +18,13 @@ $discord = new Discord([
 ]);
 
 $discord->on('ready', function (Discord $discord) {
-    echo "Bot ligado!", PHP_EOL;
+    echo "PUG SOLTO!", PHP_EOL;
 
     $discord->listenCommand('preço', function (Interaction $interaction) {
+        //adiciona a mensagem de espera do bot
         $interaction->acknowledgeWithResponse()->then(function () use ($interaction) {
-            $t3 = APIdata::getInstance();
+
+            $getapi = APIdata::getInstance();
 
             //nome do jogo
             $jogo = $interaction->data->options['jogo']->value;
@@ -43,7 +45,7 @@ $discord->on('ready', function (Discord $discord) {
             );
             $json_dataid = json_encode($dataid);
 
-            $id_data = $t3->getApiData($id_api_url, null, $json_dataid);
+            $id_data = $getapi->getApiData($id_api_url, null, $json_dataid);
             $id = $id_data[$jogo];
 
             // armazena o nome do jogo
@@ -52,10 +54,19 @@ $discord->on('ready', function (Discord $discord) {
             );
             $json_data = json_encode($data);
             
-            $itad_api_data = $t3->getApiData($itad_api_url, $json_data, null);
-            $steam_api_data = $t3->getApiData($steam_api_url);
+            // armazena os dados do jogo
+            $itad_api_data = $getapi->getApiData($itad_api_url, $json_data, null);
+            $steam_api_data = $getapi->getApiData($steam_api_url);
             
+            if($itad_api_data === false || $id_data == false) {
+                $interaction->updateOriginalResponse(MessageBuilder::new()->setContent("❌ Não foi possível recuperar os dados da API IsThereAnyDeal."));
+                return;
+            }
+            if($steam_api_data == false){
+                $interaction->updateOriginalResponse(MessageBuilder::new()->setContent("❌ Não foi possível recuperar os dados da API Steam."));
+            }
 
+            // exibe a mensagem da resposta
             if (!empty($steam_api_data['items'])) {
                 $item = $steam_api_data['items'][0];
                 $nome = $item['name'];
