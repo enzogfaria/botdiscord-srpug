@@ -21,15 +21,15 @@ $discord->on('ready', function (Discord $discord) {
 
     // Ver mensagens.
     $discord->on(Event::MESSAGE_CREATE, function (Message $message, Discord $discord) {
-        if(strpos($message->content, '!preço') === 0){
+        if(strpos($message->content, '/preço') === 0){
             if(strpos($message->content, 'GTA V') !== false) {
                 $jogo = 'Grand Theft Auto V';
             }else {
-                $jogo = trim(str_replace('!preço',  '', $message->content));
+                $jogo = trim(str_replace('/preço',  '', $message->content));
             }
             
             if(empty($jogo)){
-                $message->reply("❌ Por favor, insira o nome do jogo após `!preço`. Exemplo: `!preço Hollow Knight`");
+                $message->reply("❌ Por favor, insira o nome do jogo após `!preço`. Exemplo: `/preço Hollow Knight`");
                 return; 
             }
 
@@ -42,14 +42,15 @@ $discord->on('ready', function (Discord $discord) {
                 $preco = isset($primeiroJogo['price']['final']) ? 'R$ ' . number_format($primeiroJogo['price']['final'] / 100, 2, ',', '.') : 'gratuito';
                 $link = "https://store.steampowered.com/app/" . $primeiroJogo['id'];
 
-                $message->reply("🎮 **$nome** está **$preco** na Steam! 🔗 [Clique aqui]($link)");
+                $message->reply(
+                    "🎮 **$nome** na Steam! 🔗 [Clique aqui]($link)\n" .
+                    "💵 Valor: {$preco}\n"
+                );       
             } else {
                 $message->reply("Não encontrei esse jogo na Steam. 😕");
             }
         }
     });
-
-
 
     $discord->run();
 });
