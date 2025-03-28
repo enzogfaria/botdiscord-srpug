@@ -1,6 +1,5 @@
 <?php 
 
-
 class APIdata {
     private static ?APIdata $instance = null;
 
