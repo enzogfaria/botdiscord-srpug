@@ -1,6 +1,15 @@
 {
-    "require": {
-        "team-reflex/discord-php": "^10.4",
-        "vlucas/phpdotenv": "^5.6"
-    }
+    "name": "theen/botdiscord",
+    "autoload": {
+        "psr-4": {
+            "App\\": "App/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Enzo Faria",
+            "email": "123766918+enzogfaria@users.noreply.github.com"
+        }
+    ],
+    "require": {}
 }

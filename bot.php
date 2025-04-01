@@ -1,13 +1,13 @@
 <?php 
 include __DIR__.'/vendor/autoload.php';
 
+use App\APIdata;
+use Dotenv\Dotenv;
 use Discord\Discord;
+use Discord\WebSockets\Intents;
 use Discord\Builders\MessageBuilder;
 use Discord\Parts\Interactions\Interaction;
 use Discord\Parts\Interactions\Command\Command;
-use Discord\WebSockets\Intents;
-use Dotenv\Dotenv;
-require_once 'APIdata.php';
 
 $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load();
