@@ -61,11 +61,12 @@ $discord->on('ready', function (Discord $discord) {
             $steam_api_data = $getapi->getApiData($steam_api_url);
             
             if($itad_api_data === false || $id_data == false) {
-                $interaction->updateOriginalResponse(MessageBuilder::new()->setContent("❌ Não foi possível recuperar os dados da API IsThereAnyDeal."));
+                $interaction->updateOriginalResponse(MessageBuilder::new()->setContent("❌ Não foi possível recuperar os dados da API IsThereAnyDeal :("));
                 return;
             }
             if($steam_api_data == false){
-                $interaction->updateOriginalResponse(MessageBuilder::new()->setContent("❌ Não foi possível recuperar os dados da API Steam."));
+                $interaction->updateOriginalResponse(MessageBuilder::new()->setContent("❌ Não foi possível recuperar os dados da API Steam 
+                :("));
             }
 
             // exibe a mensagem da resposta
